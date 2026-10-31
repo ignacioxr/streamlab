@@ -2,6 +2,7 @@
 
 import { ListLiveChannelsQuery } from "@/domain/channel";
 import { useLiveChannels } from "@/features/browse/hooks/use-live-channels";
+import { ChannelCard } from "./channel-card";
 
 export function ChannelList({ query }: { query: ListLiveChannelsQuery }) {
   const { data, isPending, isError } = useLiveChannels(query);
@@ -10,10 +11,10 @@ export function ChannelList({ query }: { query: ListLiveChannelsQuery }) {
   if(isError) return <p>Could not load channels.</p>
 
   return (
-    <ol>
+    <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {data.map((channel) => (
         <li key={channel.id}>
-          {channel.title} · {channel.streamerName} · {channel.viewerCount}
+          <ChannelCard channel={channel} />
         </li>
       ))}
     </ol>
