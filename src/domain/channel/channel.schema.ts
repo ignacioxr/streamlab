@@ -3,7 +3,6 @@ import z from "zod";
 export const CategorySchema = z.enum([
   "gaming",
   "music",
-  "art",
   "just-chatting",
   "sports",
   "creative"
