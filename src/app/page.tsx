@@ -2,10 +2,13 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import { dehydrate, HydrationBoundary, noop } from "@tanstack/react-query";
 import { getQueryClient } from "./_providers/get-query-client";
-import { ChannelGrid, liveChannelsQueryOptions } from "@/features/browse";
+import {
+  ChannelGrid,
+  ChannelGridSkeleton,
+  liveChannelsQueryOptions,
+} from "@/features/browse";
 import { seedChannelCatalog } from "@/infrastructure/server/seed-channel-catalog";
-import { ListLiveChannelsQuery } from "@/domain/channel";
-import { ChannelGridSkeleton } from "@/features/browse";
+import type { ListLiveChannelsQuery } from "@/domain/channel";
 
 const BROWSE_QUERY: ListLiveChannelsQuery = { limit: 24 };
 
@@ -13,7 +16,7 @@ export default function BrowsePage() {
   return (
     <main className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6">
       <h1>Live channels</h1>
-      <Suspense fallback={<ChannelGridSkeleton />}>
+      <Suspense fallback={<ChannelGridSkeleton count={BROWSE_QUERY.limit}/>}>
         <LiveChannels />
       </Suspense>
     </main>
