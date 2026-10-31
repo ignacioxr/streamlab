@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary, noop } from "@tanstack/react-query";
 import { getQueryClient } from "./_providers/get-query-client";
-import { ChannelList, liveChannelsQueryOptions } from "@/features/browse";
+import { ChannelGrid, liveChannelsQueryOptions } from "@/features/browse";
 import { seedChannelCatalog } from "@/infrastructure/server/seed-channel-catalog";
 import { ListLiveChannelsQuery } from "@/domain/channel";
 import { connection } from "next/server";
@@ -29,7 +29,7 @@ async function LiveChannels() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ChannelList query={BROWSE_QUERY} />
+      <ChannelGrid query={BROWSE_QUERY} />
     </HydrationBoundary>
   );
 }
