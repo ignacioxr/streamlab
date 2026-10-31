@@ -1,4 +1,4 @@
-import { Channel } from "@/domain/channel";
+import { CATEGORY_LABELS, Channel } from "@/domain/channel";
 import { formatCompactNumber } from "@/shared/lib/format-compact-number";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,8 +44,8 @@ export function ChannelCard({ channel, eager = false }: ChannelCardProps) {
           {channel.title}
         </h3>
       </Link>
-      <p className="line-camp-1 text-sm text-neutral-400">{channel.streamerName}</p>
-      <p className="line-camp-1 text-xs text-neutral-500">{channel.category}</p>
+      <p className="line-clamp-1 text-sm text-neutral-400">{channel.streamerName}</p>
+      <p className="line-clamp-1 text-xs text-neutral-500">{CATEGORY_LABELS[channel.category]}</p>
     </article>
   );
 }
