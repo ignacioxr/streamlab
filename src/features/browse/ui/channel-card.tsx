@@ -8,7 +8,6 @@ export const CHANNEL_CARD_SIZES =
 
 type ChannelCardProps = {
   channel: Channel;
-  /** First visible row: load immediately with high fetch priority (LCP candidates). */
   eager?: boolean;
 };
 
@@ -16,7 +15,8 @@ export function ChannelCard({ channel, eager = false }: ChannelCardProps) {
   return (
     <article className="group">
       <Link
-        href={`/channels/${channel.id}`}
+        href={`/channels/${channel.slug}`}
+        prefetch={false}
         className="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
       >
         <div className="relative aspect-video overflow-hidden rounded-lg bg-neutral-800">
