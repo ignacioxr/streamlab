@@ -7,8 +7,19 @@ const QuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(24)
 });
 
+function toParamRecord(searchParams: URLSearchParams) {
+  const params: Record<string, string | string[] | undefined> = {};
+
+  for(const key of new Set(searchParams.keys())) {
+    const values = searchParams.getAll(key);
+    params[key] = values.length > 1 ? values : values[0];
+  }
+
+  return params;
+}
+
 export async function GET(request: Request) {
-  const params = Object.fromEntries(new URL(request.url).searchParams);
+  const params = toParamRecord(new URL(request.url).searchParams);
   const parsed = QuerySchema.safeParse(params);
 
   if(!parsed.success) {
