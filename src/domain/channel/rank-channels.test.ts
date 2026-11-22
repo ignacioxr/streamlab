@@ -1,27 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { Channel } from "./channel.schema";
 import { rankChannels } from "./rank-channels";
-
-function makeChannel(overrides: Partial<Channel> = {}): Channel {
-  return {
-    id: "1",
-    slug: "test-channel",
-    title: "Test channel",
-    streamerName: "tester",
-    category: "gaming",
-    thumbnailUrl: "https://example.com/thumb.jpg",
-    viewerCount: 0,
-    isLive: true,
-    ...overrides,
-  };
-}
+import { buildChannel } from "@/test/build-channel";
 
 describe("rankChannels", () => {
   it("orders channels by viewer count, highest first", () => {
     const channels = [
-      makeChannel({ id: "a", viewerCount: 10 }),
-      makeChannel({ id: "b", viewerCount: 500 }),
-      makeChannel({ id: "c", viewerCount: 42 }),
+      buildChannel({ id: "a", viewerCount: 10 }),
+      buildChannel({ id: "b", viewerCount: 500 }),
+      buildChannel({ id: "c", viewerCount: 42 }),
     ];
 
     expect(rankChannels(channels).map((c) => c.id)).toEqual(["b", "c", "a"]);
@@ -29,8 +15,8 @@ describe("rankChannels", () => {
 
   it("breaks ties by title so the order is deterministic", () => {
     const channels = [
-      makeChannel({ id: "b", title: "Zelda run", viewerCount: 500 }),
-      makeChannel({ id: "a", title: "Art stream", viewerCount: 500 })
+      buildChannel({ id: "b", title: "Zelda run", viewerCount: 500 }),
+      buildChannel({ id: "a", title: "Art stream", viewerCount: 500 })
     ];
 
     expect(rankChannels(channels).map((c) => c.id)).toEqual(["a", "b"]);
@@ -38,8 +24,8 @@ describe("rankChannels", () => {
 
   it("does not mutate the input", () => {
     const channels = [
-      makeChannel({ id: "a", viewerCount: 1 }),
-      makeChannel({ id: "b", viewerCount: 2 })
+      buildChannel({ id: "a", viewerCount: 1 }),
+      buildChannel({ id: "b", viewerCount: 2 })
     ];
 
     const ranked = rankChannels(channels);
