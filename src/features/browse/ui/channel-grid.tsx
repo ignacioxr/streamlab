@@ -7,6 +7,7 @@ import { CHANNEL_GRID_CLASS } from "./grid-layout";
 import { ChannelGridSkeleton } from "./channel-grid-skeleton";
 
 const ABOVE_THE_FOLD_COUNT = 4;
+const HIGH_PRIORITY_COUNT = 1;
 
 export function ChannelGrid({ query }: { query: ListLiveChannelsQuery }) {
   const { data, isPending, isError } = useLiveChannels(query);
@@ -19,7 +20,11 @@ export function ChannelGrid({ query }: { query: ListLiveChannelsQuery }) {
     <ol className={CHANNEL_GRID_CLASS}>
       {data.map((channel, index) => (
         <li key={channel.id}>
-          <ChannelCard channel={channel} eager={index < ABOVE_THE_FOLD_COUNT} />
+          <ChannelCard 
+            channel={channel} 
+            eager={index < ABOVE_THE_FOLD_COUNT} 
+            highPriority={index < HIGH_PRIORITY_COUNT}
+          />
         </li>
       ))}
     </ol>
