@@ -51,7 +51,21 @@ LCP element: the first card's thumbnail (`img.object-cover`, served through `nex
 
 ### A. High fetch priority only for the first card
 
-_Pending._
+Commit: `5c6b041`
+
+The first 4 cards keep `loading="eager"`, but only the first gets `fetchPriority="high"`. A test asserts that only the first image is high priority.
+
+| Run | Score | LCP | CLS | FCP | TBT |
+|---|---|---|---|---|---|
+| Mobile, simulated (median of 3) | 94 | 3.1 s | 0 | 0.8 s | 0 ms |
+| Mobile, devtools throttling | 99 | 1.8 s | 0 | 1.5 s | 0 ms |
+
+Simulated mobile LCP across the 3 runs: 3.1 s, 3.1 s, 3.1 s.
+
+- Simulated LCP improved from 3.5 s to 3.1 s and became stable across runs.
+- Devtools LCP did not move (1.7 s to 1.8 s, within noise). Cards 2 to 4 now start at 1276 to 1435 ms instead of 609 ms, but the LCP image still takes about 1.1 s while sharing the connection with fonts (52 KiB) and scripts (186 KiB).
+- React 19 emits `<link rel="preload" as="image">` for every non-lazy image, so cards 2 to 4 are still preloaded, at auto priority.
+- In the unthrottled trace the LCP image finishes at 133 ms but is painted at 394 ms, and the lazy images start at about 365 ms. Hypothesis: the grid's streamed Suspense boundary is revealed late, and the simulator counts every request started before that point (186 KiB JS, 52 KiB fonts, 232 KiB images).
 
 ## Results
 
