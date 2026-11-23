@@ -9,9 +9,10 @@ export const CHANNEL_CARD_SIZES =
 type ChannelCardProps = {
   channel: Channel;
   eager?: boolean;
+  highPriority?: boolean;
 };
 
-export function ChannelCard({ channel, eager = false }: ChannelCardProps) {
+export function ChannelCard({ channel, eager = false, highPriority = false }: ChannelCardProps) {
   return (
     <article className="group">
       <Link
@@ -26,7 +27,7 @@ export function ChannelCard({ channel, eager = false }: ChannelCardProps) {
             fill
             sizes={CHANNEL_CARD_SIZES}
             loading={eager ? "eager" : "lazy"}
-            fetchPriority={eager ? "high" : "auto"}
+            fetchPriority={highPriority ? "high" : "auto"}
             className="object-cover transition-transform duration-200 group-hover:scale-105"
           />
           {channel.isLive && (
