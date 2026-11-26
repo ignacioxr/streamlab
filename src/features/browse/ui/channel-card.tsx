@@ -1,6 +1,5 @@
 import { CATEGORY_LABELS, Channel } from "@/domain/channel";
 import { formatCompactNumber } from "@/shared/lib/format-compact-number";
-import Image from "next/image";
 import Link from "next/link";
 
 export const CHANNEL_CARD_SIZES =
@@ -26,7 +25,7 @@ export function ChannelCard({ channel, eager = false, highPriority = false }: Ch
             alt=""
             className="w-full"
             loading={eager ? "eager" : "lazy"}
-            fetchPriority={eager ? "high" : undefined}
+            fetchPriority={highPriority ? "high" : "auto"}
           />
           {channel.isLive && (
             <>
