@@ -20,15 +20,13 @@ export function ChannelCard({ channel, eager = false, highPriority = false }: Ch
         prefetch={false}
         className="block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-500"
       >
-        <div className="relative aspect-video overflow-hidden rounded-lg bg-neutral-800">
-          <Image
+        <div className="relative overflow-hidden rounded-lg bg-neutral-800">
+          <img
             src={channel.thumbnailUrl}
             alt=""
-            fill
-            sizes={CHANNEL_CARD_SIZES}
+            className="w-full"
             loading={eager ? "eager" : "lazy"}
-            fetchPriority={highPriority ? "high" : "auto"}
-            className="object-cover transition-transform duration-200 group-hover:scale-105"
+            fetchPriority={eager ? "high" : undefined}
           />
           {channel.isLive && (
             <>
