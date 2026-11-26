@@ -16,6 +16,6 @@ describe("parseCategoryParam", () => {
     ["wrong case", "MUSIC"],
     ["repeated param", ["music", "gaming"]],
   ])("ignores %s", (_label, input) => {
-    expect(parseCategoryParam(input)).toBeTrue();
+    expect(parseCategoryParam(input)).toBeUndefined();
   });
 });
